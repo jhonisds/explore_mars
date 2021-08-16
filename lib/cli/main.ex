@@ -4,7 +4,6 @@ defmodule Cli.Main do
 
   def start_launch do
     welcome_message()
-
     Interface.start()
   end
 

@@ -1,20 +1,12 @@
 defmodule Cli.Interface do
   alias Mix.Shell.IO, as: Shell
-
-  @surface ~r/(\d+)\s+(\d+)/
-
-  def entry_surface do
-    @surface
-    |> Regex.run(Shell.prompt("Surface:"))
-    |> Enum.drop(1)
-    |> Enum.map(&String.to_integer/1)
-  end
+  alias Operation.{Entry, File}
 
   defp options,
     do: [
       "Read file",
-      "Enter Coordinates",
-      "Abort launch"
+      "Enter cordinates",
+      "Abort mission"
     ]
 
   def start do
@@ -28,7 +20,7 @@ defmodule Cli.Interface do
 
     case Enum.at(options, index) do
       nil ->
-        display_invalid_option()
+        display_invalid_option("Invalid option.")
         ask_for_options(options)
 
       result ->
@@ -46,7 +38,7 @@ defmodule Cli.Interface do
 
     case answer do
       :error ->
-        display_invalid_option()
+        display_invalid_option("Invalid option.")
         ask_for_index(options)
 
       {option, _} ->
@@ -67,11 +59,12 @@ defmodule Cli.Interface do
     "Which mode? [#{options}]\n"
   end
 
-  def display_invalid_option do
+  def display_invalid_option(message) do
     Shell.cmd("clear")
-    Shell.error("Invalid option.")
+    Shell.error(message)
     Shell.prompt("Press enter to try again.")
     Shell.cmd("clear")
+    start()
   end
 
   defp confirm(mode) do
@@ -81,9 +74,28 @@ defmodule Cli.Interface do
 
   defp launch_choice(mode) do
     case mode do
-      0 -> Shell.info("file")
-      1 -> Shell.info("command")
-      2 -> Shell.cmd("exit")
+      0 ->
+        File.read()
+
+      1 ->
+        manual_mode()
+
+      2 ->
+        Shell.cmd("exit")
     end
+  end
+
+  defp manual_mode do
+    grid =
+      Shell.prompt("Surface:")
+      |> Entry.surface()
+
+    pos =
+      Shell.prompt("Initial Position:")
+      |> Entry.position()
+
+    Shell.prompt("Cordinates:")
+    |> Entry.cordinates(grid, pos)
+    |> Shell.info()
   end
 end
