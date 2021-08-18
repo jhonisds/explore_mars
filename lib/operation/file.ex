@@ -30,7 +30,7 @@ defmodule Operation.File do
     [position, coordinate | next] = tail
 
     coordinate
-    |> Entry.coordinates(grid, Entry.position(position))
+    |> Entry.coordinates(grid, Entry.position(position, grid))
     |> Shell.info()
 
     auto_mode(grid, next)

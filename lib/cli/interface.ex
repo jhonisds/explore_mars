@@ -66,6 +66,7 @@ defmodule Cli.Interface do
   def display_invalid_option(message) do
     Shell.cmd("clear")
     Shell.error(message)
+    Shell.cmd("exit")
     Shell.prompt("Press enter to try again.")
     Shell.cmd("clear")
     start()
@@ -96,7 +97,7 @@ defmodule Cli.Interface do
 
     pos =
       Shell.prompt("Initial position:")
-      |> Entry.position()
+      |> Entry.position(grid)
 
     Shell.prompt("Enter coordinates:")
     |> Entry.coordinates(grid, pos)

@@ -24,7 +24,7 @@ defmodule Operation.Entry do
       Interface.display_invalid_option("Invalid surface: #{input}.Enter 2 number.")
   end
 
-  def position(input) do
+  def position(input, grid) do
     [x, y, direction] =
       @position
       |> Regex.run(input)
@@ -35,6 +35,12 @@ defmodule Operation.Entry do
       |> Enum.map(&String.to_integer/1)
       |> List.insert_at(-1, direction)
       |> List.to_tuple()
+
+    if grid.x < pos_x || grid.y < pos_y do
+      Interface.display_invalid_option(
+        "Exceeded limit: #{input}. Should be less than x:#{grid.x} y:#{grid.y}."
+      )
+    end
 
     result = %{x: pos_x, y: pos_y, direction: direction}
     Position.initial(result)
