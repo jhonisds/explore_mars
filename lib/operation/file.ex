@@ -1,9 +1,13 @@
 defmodule Operation.File do
+  @moduledoc """
+  Module `File`. Responsible for reading the coordinates in the file.
+  """
+
   alias Mix.Shell.IO, as: Shell
   alias Operation.Entry
 
   def read do
-    {:ok, result} = File.read("cordinates.txt")
+    {:ok, result} = File.read("coordinates.txt")
 
     {head, tail} =
       result
@@ -23,10 +27,10 @@ defmodule Operation.File do
   end
 
   defp auto_mode(grid, tail) do
-    [position, cordinate | next] = tail
+    [position, coordinate | next] = tail
 
-    cordinate
-    |> Entry.cordinates(grid, Entry.position(position))
+    coordinate
+    |> Entry.coordinates(grid, Entry.position(position))
     |> Shell.info()
 
     auto_mode(grid, next)

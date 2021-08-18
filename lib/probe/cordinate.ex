@@ -1,4 +1,9 @@
-defmodule Probe.Cordinate do
+defmodule Probe.Coordinate do
+  @moduledoc """
+  Module `Coordinate`. Defines the structure for grid and controls
+  the probe movement. `5 5`
+  """
+
   alias ExploreMars
 
   defstruct [:x, :y]

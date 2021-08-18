@@ -18,12 +18,12 @@ No diretório do projeto abra o terminal, execute comando `mix start` e selecion
 ```shell
 Enter launch mode:
 1 - Read file
-2 - Enter cordinates
+2 - Enter coordinates
 3 - Abort mission
 Which mode? [1,2,3]
 ```
 
-> `1 - Read file` - Executa instruções do arquivo `cordinates.txt` e exibe o resultado.
+> `1 - Read file` - Executa instruções do arquivo `coordinates.txt` e exibe o resultado.
 
 ```shell
 Confirm: Read file [Yn]
@@ -32,13 +32,13 @@ Confirm: Read file [Yn]
 "Launch successful."
 ```
 
-> `2 - Enter cordinates` - Informa manualmente coordenadas para o lançamento da sonda.
+> `2 - Enter coordinates` - Informa manualmente coordenadas para o lançamento da sonda.
 
 ```shell
-Confirm: Enter cordinates [Yn]
+Confirm: Enter coordinates [Yn]
 Surface: 5 5
 Initial Position: 1 2 N
-Cordinates: LMLMLMLMM
+Coordinates: LMLMLMLMM
 1 3 N
 ```
 

@@ -1,11 +1,15 @@
 defmodule Cli.Interface do
+  @moduledoc """
+  Module `Interface`. Defines interface user.
+  """
+
   alias Mix.Shell.IO, as: Shell
   alias Operation.{Entry, File}
 
   defp options,
     do: [
       "Read file",
-      "Enter cordinates",
+      "Enter coordinates",
       "Abort mission"
     ]
 
@@ -91,11 +95,11 @@ defmodule Cli.Interface do
       |> Entry.surface()
 
     pos =
-      Shell.prompt("Initial Position:")
+      Shell.prompt("Initial position:")
       |> Entry.position()
 
-    Shell.prompt("Cordinates:")
-    |> Entry.cordinates(grid, pos)
+    Shell.prompt("Enter coordinates:")
+    |> Entry.coordinates(grid, pos)
     |> Shell.info()
   end
 end

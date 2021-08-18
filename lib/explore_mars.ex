@@ -1,12 +1,14 @@
 defmodule ExploreMars do
   @moduledoc """
-  Documentation for `ExploreMars`.
+  Module `ExploreMars`. Provides state `GenServer` to control the probe.
   """
   use GenServer
 
-  alias Probe.Cordinate
+  alias Probe.Coordinate
 
-  # Client
+  @doc """
+  Init `state`.
+  """
   def init(value) do
     {:ok, value}
   end
@@ -23,19 +25,21 @@ defmodule ExploreMars do
     GenServer.call(pid, :view)
   end
 
-  # Server (callbacks)
+  @doc """
+  Callback.
+  """
   def handle_call(:move, _from, probe) do
-    state = %{probe | position: Cordinate.move(probe.position.direction, probe.position)}
+    state = %{probe | position: Coordinate.move(probe.position.direction, probe.position)}
     {:reply, state, state}
   end
 
   def handle_call(:left, _from, probe) do
-    state = %{probe | position: Cordinate.rotate_left(probe.position.direction, probe.position)}
+    state = %{probe | position: Coordinate.rotate_left(probe.position.direction, probe.position)}
     {:reply, state, state}
   end
 
   def handle_call(:right, _from, probe) do
-    state = %{probe | position: Cordinate.rotate_right(probe.position.direction, probe.position)}
+    state = %{probe | position: Coordinate.rotate_right(probe.position.direction, probe.position)}
     {:reply, state, state}
   end
 

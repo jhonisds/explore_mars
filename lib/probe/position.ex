@@ -1,4 +1,9 @@
 defmodule Probe.Position do
+  @moduledoc """
+  Module `Position`. Defines the structure for positioning the probe
+  on the x, y and direction. `1 2 N`
+  """
+
   defstruct [:x, :y, :direction]
 
   @cardinal %{"N" => :north, "S" => :south, "E" => :east, "W" => :west}

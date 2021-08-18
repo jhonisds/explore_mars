@@ -1,10 +1,14 @@
 defmodule Operation.Entry do
+  @moduledoc """
+  Module `Entry`. Defines input data.
+  """
+
   alias Cli.Interface
-  alias Probe.{Cordinate, Position}
+  alias Probe.{Coordinate, Position}
 
   @surface ~r/(\d+)\s+(\d+)/
   @position ~r/(\d+)\s+(\d+)\s+([ˆNSEW])/
-  @cordinates ~r/[MLR]/
+  @coordinates ~r/[MLR]/
 
   def surface(input) do
     {x, y} =
@@ -14,7 +18,7 @@ defmodule Operation.Entry do
       |> Enum.map(&String.to_integer/1)
       |> List.to_tuple()
 
-    Cordinate.grid(%{x: x, y: y})
+    Coordinate.grid(%{x: x, y: y})
   rescue
     _ in Protocol.UndefinedError ->
       Interface.display_invalid_option("Invalid surface: #{input}.Enter 2 number.")
@@ -41,24 +45,24 @@ defmodule Operation.Entry do
       )
   end
 
-  def cordinates(input, grid, pos) do
+  def coordinates(input, grid, pos) do
     attrs = %{
       grid: grid,
       position: pos
     }
 
-    @cordinates
+    @coordinates
     |> Regex.scan(input)
     |> case do
       [] ->
         Interface.display_invalid_option(
-          "Invalid cordinates: #{input}. Valid cordinates [M-L-R]."
+          "Invalid coordinates: #{input}. Valid coordinates [M-L-R]."
         )
 
       result ->
         result
         |> List.flatten()
-        |> Cordinate.route(attrs)
+        |> Coordinate.route(attrs)
         |> Position.output()
     end
   end
